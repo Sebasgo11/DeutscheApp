@@ -1,0 +1,61 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:background="#E9EAED">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="@string/benutzer"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@color/white"
+            android:id="@+id/etUsername"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="@string/passwort"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:layout_marginBottom="10dp"
+            android:background="@color/white"
+            android:id="@+id/etPassword"/>
+
+        <Button
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginBottom="10dp"
+             android:id="@+id/bLogin"
+             android:background="@color/com_facebook_blue"
+             android:textColor="@color/white"
+             android:text="@string/anmelden"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="@string/reg"
+        android:id="@+id/tvRegisterLink"
+        android:textStyle="bold"
+        android:backgroundTint="@color/white"
+        android:textColor="@color/blue"
+        android:layout_marginBottom="10dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content" />
+
+
+</LinearLayout>
+

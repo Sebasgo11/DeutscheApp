@@ -1,0 +1,324 @@
+<resources>
+    <string name="app_name">KonjugApp</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">action_settings</string>
+    <string name="abmelden">Abmelden</string>
+    <string name="title_activity_login">Login</string>
+    <string name="passwort">Passwort</string>
+    <string name="benutzer">Benutzer(in)</string>
+    <string name="reg">Registrieren sie Hier !</string>
+    <string name="registrieren">Registrieren</string>
+    <string name="anmelden">Anmelden</string>
+    <string name="title_activity_registrieren">Registrieren</string>
+    <string name="name">Name</string>
+    <string name="alter">Alter</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_register">Register</string>
+    <string name="app_id">1475087462789868</string>
+    <string name="mensaje">Benachrichtigungen</string>
+    <string name="mensaje2">Applikation</string>
+    <string name="jugar">Spielen</string>
+    <string name="activar">Aktivieren</string>
+    <string name="desactivar">Deaktivieren</string>
+    <string name="title_activity_result">ResultActivity</string>
+    <string name="notificacion1"></string>
+    <string name="title_activity_spielen">Spielen</string>
+
+    <string name="adj_dek">Adjektivdeklination</string>
+    <string name="kasus">Kasus</string>
+
+    <string-array name="my_substantiven">
+        <item>m Vater</item>
+        <item>f Mutter</item>
+        <item>n Baby</item>
+        <item>p Eltern</item>
+        <item>m Sohn</item>
+        <item>n Zeug</item>
+        <item>n Auto</item>
+        <item>f Auge</item>
+        <item>n Haus</item>
+        <item>f Tochter</item>
+        <item>p Augen</item>
+        <item>f Tur</item>
+        <item>m Komputer</item>
+        <item>p Tische</item>
+        <item>p Flugzeug</item>
+        <item>m Kater</item>
+    </string-array>
+
+    <string-array name="my_adjektiven">
+        <item>aktiv</item>
+        <item>alt</item>
+        <item>arm</item>
+        <item>ärgerlich</item>
+        <item>bekannt</item>
+        <item>berühmt</item>
+        <item>billig</item>
+        <item>böse</item>
+        <item>breit</item>
+        <item>bunt</item>
+        <item>dunkel</item>
+        <item>durstig</item>
+        <item>dünn</item>
+        <item>eilig</item>
+        <item>einfach</item>
+        <item>eng</item>
+        <item>falsch</item>
+        <item>faul</item>
+        <item>fest</item>
+        <item>feucht</item>
+        <item>flach</item>
+        <item>fleißig</item>
+        <item>freundlich</item>
+        <item>froh</item>
+        <item>furchtbar</item>
+        <item>geduldig</item>
+        <item>gefährlich</item>
+        <item>geizig</item>
+        <item>gern</item>
+        <item>gestreift</item>
+        <item>gesund</item>
+        <item>gewellt</item>
+        <item>glatt</item>
+        <item>groß</item>
+        <item>gut</item>
+        <item>hart</item>
+        <item>hässlich</item>
+        <item>hell</item>
+        <item>hellblond</item>
+        <item>herrlich</item>
+        <item>höflich</item>
+        <item>hungrig</item>
+        <item>hübsch</item>
+        <item>jung</item>
+        <item>kalt</item>
+        <item>kariert</item>
+        <item>klar</item>
+        <item>klein</item>
+        <item>korrekt</item>
+        <item>krank</item>
+        <item>kurz</item>
+        <item>lang</item>
+        <item>langsam</item>
+        <item>laut</item>
+        <item>leer</item>
+        <item>leicht</item>
+        <item>leise</item>
+        <item>lieb</item>
+        <item>locker</item>
+        <item>lockig</item>
+        <item>lustig</item>
+        <item>modern</item>
+        <item>mutig</item>
+        <item>müde</item>
+        <item>nah</item>
+        <item>nass</item>
+        <item>nett</item>
+        <item>neu</item>
+        <item>neugierig</item>
+        <item>offen</item>
+        <item>oval</item>
+        <item>platt</item>
+        <item>reich</item>
+        <item>richtig</item>
+        <item>riesengroß</item>
+        <item>riesig</item>
+        <item>ruhig</item>
+        <item>rund</item>
+        <item>satt</item>
+        <item>sauber</item>
+        <item>sauer</item>
+        <item>scharf</item>
+        <item>schick</item>
+        <item>schlank</item>
+        <item>schlecht</item>
+        <item>schmal</item>
+        <item>schmerzhaft</item>
+        <item>schmutzig</item>
+        <item>schnell</item>
+        <item>schön</item>
+        <item>schwach</item>
+        <item>schwer</item>
+        <item>spät</item>
+        <item>spitz</item>
+        <item>stark</item>
+        <item>steif</item>
+        <item>still</item>
+        <item>stolz</item>
+        <item>streng</item>
+        <item>süß</item>
+        <item>teuer</item>
+        <item>tief</item>
+        <item>tot</item>
+        <item>traurig</item>
+        <item>trocken</item>
+        <item>tüchtig</item>
+        <item>unfreundlich</item>
+        <item>vernünftig</item>
+        <item>viel</item>
+        <item>voll</item>
+        <item>vorsichtig</item>
+        <item>warm</item>
+        <item>weich</item>
+        <item>weit</item>
+        <item>wunderbar</item>
+        <item>wunderschön</item>
+        <item>zornig</item>
+        <item>zufrieden</item>
+    </string-array>
+
+    <string-array name="my_dek_art">
+        <item>der</item>
+        <item>die</item>
+        <item>das</item>
+        <item>die</item>
+        <item>den</item>
+        <item>die</item>
+        <item>das</item>
+        <item>die</item>
+        <item>dem</item>
+        <item>der</item>
+        <item>dem</item>
+        <item>den</item>
+        <item>des</item>
+        <item>der</item>
+        <item>des</item>
+        <item>der</item>
+        <item>ein</item>
+        <item>eine</item>
+        <item>ein</item>
+        <item>-</item>
+        <item>einen</item>
+        <item>eine</item>
+        <item>ein</item>
+        <item>-</item>
+        <item>einem</item>
+        <item>einer</item>
+        <item>einem</item>
+        <item>-</item>
+        <item>eines</item>
+        <item>einer</item>
+        <item>eines</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+    </string-array>
+
+    <string-array name="my_dek_adj">
+        <item>-e</item>
+        <item>-e</item>
+        <item>-e</item>
+        <item>-en</item>
+        <item>-en</item>
+        <item>-e</item>
+        <item>-e</item>
+        <item>-en</item>
+        <item>-en</item>
+        <item>-en</item>
+        <item>-en</item>
+        <item>-en</item>
+        <item>-en</item>
+        <item>-en</item>
+        <item>-en</item>
+        <item>-en</item>
+        <item>-er</item>
+        <item>-e</item>
+        <item>-es</item>
+        <item>-</item>
+        <item>-en</item>
+        <item>-e</item>
+        <item>-es</item>
+        <item>-</item>
+        <item>-en</item>
+        <item>-en</item>
+        <item>-en</item>
+        <item>-</item>
+        <item>-en</item>
+        <item>-en</item>
+        <item>-en</item>
+        <item>-</item>
+        <item>-er</item>
+        <item>-e</item>
+        <item>-es</item>
+        <item>-e</item>
+        <item>-en</item>
+        <item>-e</item>
+        <item>-es</item>
+        <item>-e</item>
+        <item>-em</item>
+        <item>-er</item>
+        <item>-em</item>
+        <item>-en</item>
+        <item>-en</item>
+        <item>-er</item>
+        <item>-en</item>
+        <item>-er</item>
+    </string-array>
+
+    <string-array name="my_dek_sub">
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-n</item>
+        <item>-s</item>
+        <item>-</item>
+        <item>-es</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-s</item>
+        <item>-</item>
+        <item>-es</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-n</item>
+        <item>-s</item>
+        <item>-</item>
+        <item>-es</item>
+        <item>-</item>
+    </string-array>
+
+</resources>
