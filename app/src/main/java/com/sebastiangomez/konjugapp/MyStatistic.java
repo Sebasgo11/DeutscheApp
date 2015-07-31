@@ -26,4 +26,3 @@ public class MyStatistic {
         this.rate = rate;
     }
 }
-

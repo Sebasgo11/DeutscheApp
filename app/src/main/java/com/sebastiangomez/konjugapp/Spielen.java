@@ -1,4 +1,5 @@
 package com.sebastiangomez.konjugapp;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -37,28 +38,27 @@ public class Spielen extends Activity {
     private String[] endungen_adj = {"-e","-en", "-es", "-er", "-em"};
     private String[] endungen_sub = {"-n","-s","-es", "-"};
     private String artikel_case, kasus_case, genus_case;
-    private int n_kasus, my_rdm, myCase;
+    private int n_kasus, rdm_subs_id, myCase;
     private ArrayList<Integer> myMaskulinenIds, myFemininumIds, myNeutrumIds, myPluralIds;          //For storing the ids by genus
     private String selected_sub, selected_adj, rb_selectedArtikel, rb_selectedAdjektiv, rb_selectedSubstantiv;
 
     //Texts Views
-    private TextView tv_kasus0, tv_kasus1, tv_kasus2, tv_kasus3, tv_adjektiv, tv_substantiv;
+    private TextView  tv_kasus1, tv_kasus2, tv_kasus3, tv_adjektiv, tv_substantiv;
     private RadioButton rb_artikel1, rb_artikel2, rb_artikel3, rb_artikel4, rb_artikel5, rb_artikel6;
     private RadioButton rb_adjektiv1, rb_adjektiv2, rb_adjektiv3, rb_adjektiv4, rb_adjektiv5;
     private RadioButton rb_substantiv1, rb_substantiv2,rb_substantiv3,rb_substantiv4;
-    //private RadioGroup rg_artikel,rg_substantiv,rg_adjektiv;
-    private Button b_next, b_check;
+    private RadioGroup rg_artikel, rg_substantiv, rg_adjektiv;
+    //private Button b_check;
     private Random random;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
         setContentView(R.layout.activity_spielen);
 
         //Assignments
-        tv_kasus0 = (TextView) findViewById(R.id.kasus0_id);
+
         tv_kasus1 = (TextView) findViewById(R.id.kasus1_id);
         tv_kasus2 = (TextView) findViewById(R.id.kasus2_id);
         tv_kasus3 = (TextView) findViewById(R.id.kasus3_id);
@@ -83,12 +83,16 @@ public class Spielen extends Activity {
         rb_substantiv3 = (RadioButton) findViewById(R.id.substantiv3);
         rb_substantiv4 = (RadioButton) findViewById(R.id.substantiv4);
 
+        rg_artikel = (RadioGroup) findViewById(R.id.radio_group_artikel);
+        rg_adjektiv = (RadioGroup) findViewById(R.id.radio_group_adjektiv);
+        rg_substantiv = (RadioGroup) findViewById(R.id.radio_group_substantiv);
+
         //Setting AdjektivenEndungen in Radiobuttons
         rb_adjektiv1.setText(endungen_adj[0]);                     // {"-e","-en", "-es", "-er", "-em"};
         rb_adjektiv2.setText(endungen_adj[1]);
         rb_adjektiv3.setText(endungen_adj[2]);
         rb_adjektiv4.setText(endungen_adj[3]);
-        rb_adjektiv4.setText(endungen_adj[4]);
+        rb_adjektiv5.setText(endungen_adj[4]);
 
         //Setting SubstantivenEndungen in Radiobuttons
         rb_substantiv1.setText(endungen_sub[0]);
@@ -96,8 +100,7 @@ public class Spielen extends Activity {
         rb_substantiv3.setText(endungen_sub[2]);
         rb_substantiv4.setText(endungen_sub[3]);
 
-
-        b_check = (Button) findViewById(R.id.button_check);
+        //b_check = (Button) findViewById(R.id.button_check);
 
         random = new Random();
 
@@ -151,47 +154,42 @@ public class Spielen extends Activity {
         n_kasus = db.getStatisticsCount();                      //Get the number of kasus
         myStatistics = db.getStatistics();                     //Get myStatistics
         statistics = db.getAllStatistics();                     //Get all the statistics table
-        sortStatistics();                                       //Sort MyStatistics
-        myCase = chooseCase();
-        artikel_case = statistics.get(myCase - 1).getArtikel();
-        kasus_case = statistics.get(myCase - 1).getKasus();
-        genus_case = statistics.get(myCase - 1).getGenus();
 
-        tv_kasus0.setText(Integer.toString(myCase));
-        tv_kasus1.setText(artikel_case);
-        tv_kasus2.setText(kasus_case);
-        tv_kasus3.setText(genus_case);
+        /*
+        =========================================
+         */
+        NextCase();
+        /*
+        =========================================
+         */
 
-        setRadioButtons(myCase);
+        //Initialize the RadioButtons to avoid null pointers
+        rg_artikel.check(R.id.artikel1);                        //Sets but not get the text
+        rb_selectedArtikel = rb_artikel1.getText().toString();  //Get the text then
+        rg_adjektiv.check(R.id.adjektiv2);
+        rb_selectedAdjektiv = rb_adjektiv2.getText().toString();
+        rg_substantiv.check(R.id.substantiv4);
+        rb_selectedSubstantiv = rb_substantiv4.getText().toString();
 
-        if(genus_case.equals("maskulinum")){               //{"maskulinum", "femininum", "neutrum", "plural"};
-            my_rdm = random.nextInt(myMaskulinenIds.size());
-            my_rdm = myMaskulinenIds.get(my_rdm);
-            selected_sub = "der " + db.getSubstantiv(my_rdm).getSubstantiv();
+/*        int count_stats = db.getStatisticsCount();
+        // Print out Statistics properties
+        for (Statistic statistic : statistics) {
+            String log = "Id: " + statistic.getId() +
+                    "/" + Integer.toString(count_stats) +
+                    ", Artikel: " + statistic.getArtikel() +
+                    ", Kasus: " + statistic.getKasus() +
+                    ", Genus: " + statistic.getGenus() +
+                    ", Dek_art: " + statistic.getDek_art() +
+                    ", Dek_adj: " + statistic.getDek_adj() +
+                    ", Dek_sub: " + statistic.getDek_sub() +
+                    ", Ocurrences: " + statistic.getOccurrences() +
+                    ", Rights: " + statistic.getRights() +
+                    ", Wrongs: " + statistic.getWrongs() +
+                    ", Success rate: " + statistic.getSuccess_rate();
+            // Writing Adjektiven to log
+            Log.d("AllReadedStatistics", log);
         }
-        else if(genus_case.equals("femininum")){
-            my_rdm = random.nextInt(myFemininumIds.size());
-            my_rdm = myFemininumIds.get(my_rdm);
-            selected_sub = "die " + db.getSubstantiv(my_rdm).getSubstantiv();
-        }
-        else if(genus_case.equals("neutrum")){
-            my_rdm = random.nextInt(myNeutrumIds.size());
-            my_rdm = myNeutrumIds.get(my_rdm);
-            selected_sub = "das " + db.getSubstantiv(my_rdm).getSubstantiv();
-        }
-        else if(genus_case.equals("plural")){
-            my_rdm = random.nextInt(myPluralIds.size());
-            my_rdm = myPluralIds.get(my_rdm);
-            selected_sub = "die " + db.getSubstantiv(my_rdm).getSubstantiv();
-        }
-
-        selected_adj = db.getAdjektiv(random.nextInt(db.getAdjektivCount()) + 1).getAdjektiv();
-
-        tv_substantiv.setText(selected_sub);
-        tv_adjektiv.setText(selected_adj);
-
-
-
+*/
 
         //Toast.makeText(getApplicationContext(),
         //        db.getSubstantiv(random.nextInt(myMaskulinenIds.size())).getArtikel() + " "
@@ -240,7 +238,6 @@ public class Spielen extends Activity {
         List<Adjketiv> adjektiven = db.getAllAdjektiven();
         // Querying all Substantiven
         List<Substantiv> substantiven = db.getAllSunstantiven();
-
         // Print out Adjektiven properties
         for (Adjketiv adjketiv : adjektiven) {
             String log = "Id: " + adjketiv.getId() +
@@ -252,12 +249,10 @@ public class Spielen extends Activity {
 //                    log, Toast.LENGTH_SHORT).show();
 //            db.deleteTodoItem(ti)
         }
-
         // Print out Substantiv properties
         int count_subs = db.getSubstantivCount();
         // Querying all Substantiven
         List<Substantiv> substantiven = db.getAllSunstantiven();
-
         for (Substantiv substantiv : substantiven) {
             String log = "Id: " + substantiv.getId() +
                     "/" + Integer.toString(count_subs) +
@@ -269,9 +264,6 @@ public class Spielen extends Activity {
             //        log, Toast.LENGTH_SHORT).show();
             //db.deleteTodoItem(ti)
         }
-
-
-
         int count_stats = db.getStatisticsCount();
         // Print out Statistics properties
         for (Statistic statistic : statistics) {
@@ -294,53 +286,65 @@ public class Spielen extends Activity {
             //db.deleteTodoItem(ti)
         }
 */
-
-
-        // Don't forget to close database connection
-        db.closeDB();
     }
 
     public void onButtonCheckClicked(View view){
         int my_fcase = (myCase - 1) / 16;
-        int count=0;
+        int check = 0b000;
         String title, message;
-        //String myFkcArtikel = statistics.get(myCase - 1).getDek_art();
-        //String myFkcAdjektiv = statistics.get(myCase - 1).getDek_adj();
-        //String myFkcSubstantiv = statistics.get(myCase - 1).getDek_sub();
+        String myFckArtikel = statistics.get(myCase - 1).getDek_art();
+        String myFckAdjektiv = statistics.get(myCase - 1).getDek_adj();
+        String myFckSubstantiv = statistics.get(myCase - 1).getDek_sub();
+        String art_dek, adj_endung = "", sub_endung = "";
 
-        if(my_fcase == 2){}
-        else if(rb_selectedArtikel.equals(statistics.get(myCase - 1).getDek_art())){
-            Toast.makeText(getApplicationContext(),
-                    "artikel korrekt", Toast.LENGTH_SHORT).show();
-            count++;
+        if(my_fcase == 2){check = check | 0b001;}
+        else if(rb_selectedArtikel.equals(myFckArtikel)){           //bitwise AND &, bitwise exclusive OR ^, bitwise inclusive OR |
+            //Toast.makeText(getApplicationContext(),
+            //        "artikel korrekt", Toast.LENGTH_SHORT).show();
+            check = check | 0b001;
         }
 
-        if(rb_selectedAdjektiv.equals(statistics.get(myCase - 1).getDek_adj())){
-            Toast.makeText(getApplicationContext(),
-                    "adjektiv korrekt", Toast.LENGTH_SHORT).show();
-            count++;
+        if(rb_selectedAdjektiv.equals(myFckAdjektiv)){
+            //Toast.makeText(getApplicationContext(),
+            //        "adjektiv korrekt", Toast.LENGTH_SHORT).show();
+            check = check | 0b010;
         }
 
-        if(rb_selectedSubstantiv.equals(statistics.get(myCase - 1).getDek_sub())){
-            Toast.makeText(getApplicationContext(),
-                    "substantiv korrekt", Toast.LENGTH_SHORT).show();
-            count++;
+        if(rb_selectedSubstantiv.equals(myFckSubstantiv)){
+            //Toast.makeText(getApplicationContext(),
+            //        "substantiv korrekt", Toast.LENGTH_SHORT).show();
+            check = check | 0b100;
         }
 
-        my_rdm = random.nextInt(myMaskulinenIds.size());
-        my_rdm = myMaskulinenIds.get(my_rdm);
-        selected_sub = "der " + db.getSubstantiv(my_rdm).getSubstantiv();
-        message = statistics.get(myCase - 1).getDek_art() + " " + selected_adj + statistics.get(myCase - 1).getDek_adj() + " " + db.getSubstantiv(myCase - 1).getSubstantiv();
-        if(count==3){       //Correct!
+        for(int i = 0; i < myFckAdjektiv.length() - 1; i++){
+            adj_endung += myFckAdjektiv.charAt(i+1);
+        }
+        for(int i = 0; i < myFckSubstantiv.length() - 1; i++){
+            sub_endung += myFckSubstantiv.charAt(i+1);
+        }
+        if(myFckArtikel.length() == 1){
+            art_dek = "";
+        }
+        else{
+            art_dek = myFckArtikel.toString() + " ";
+        }
+
+        message = art_dek + selected_adj + adj_endung + " " + db.getSubstantiv(rdm_subs_id).getSubstantiv() + sub_endung;
+
+        if(check == 0b111){       //Correct!
             title = "Korrekt!";
-
+            //Update this case "rights" in the statistics
+            statistics.get(myCase - 1).setRights(statistics.get(myCase - 1).getRights() + 1);
         }
         else{
             title = "Falsch! :(";
+            //Update this case "rights" in the statistics
+            statistics.get(myCase - 1).setWrongs(statistics.get(myCase - 1).getWrongs() + 1);
         }
+        //Update this case "success rate" in the statistics
+        statistics.get(myCase - 1).setSuccess_rate(((double)statistics.get(myCase - 1).getRights()) / ((double)statistics.get(myCase - 1).getOccurrences()));
 
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
         // set title
         alertDialogBuilder.setTitle(title);
@@ -349,52 +353,22 @@ public class Spielen extends Activity {
         alertDialogBuilder
                 .setMessage(message)
                 .setCancelable(false)
-                .setPositiveButton("Nächste",new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog,int id) {
-                        sortStatistics();                                       //Sort MyStatistics
-                        myCase = chooseCase();
-                        artikel_case = statistics.get(myCase - 1).getArtikel();
-                        kasus_case = statistics.get(myCase - 1).getKasus();
-                        genus_case = statistics.get(myCase - 1).getGenus();
-
-                        tv_kasus0.setText(Integer.toString(myCase));
-                        tv_kasus1.setText(artikel_case);
-                        tv_kasus2.setText(kasus_case);
-                        tv_kasus3.setText(genus_case);
-
-                        setRadioButtons(myCase);
-
-                        if(genus_case.equals("maskulinum")){               //{"maskulinum", "femininum", "neutrum", "plural"};
-                            my_rdm = random.nextInt(myMaskulinenIds.size());
-                            my_rdm = myMaskulinenIds.get(my_rdm);
-                            selected_sub = "der " + db.getSubstantiv(my_rdm).getSubstantiv();
-                        }
-                        else if(genus_case.equals("femininum")){
-                            my_rdm = random.nextInt(myFemininumIds.size());
-                            my_rdm = myFemininumIds.get(my_rdm);
-                            selected_sub = "die " + db.getSubstantiv(my_rdm).getSubstantiv();
-                        }
-                        else if(genus_case.equals("neutrum")){
-                            my_rdm = random.nextInt(myNeutrumIds.size());
-                            my_rdm = myNeutrumIds.get(my_rdm);
-                            selected_sub = "das " + db.getSubstantiv(my_rdm).getSubstantiv();
-                        }
-                        else if(genus_case.equals("plural")){
-                            my_rdm = random.nextInt(myPluralIds.size());
-                            my_rdm = myPluralIds.get(my_rdm);
-                            selected_sub = "die " + db.getSubstantiv(my_rdm).getSubstantiv();
-                        }
-
-                        selected_adj = db.getAdjektiv(random.nextInt(db.getAdjektivCount()) + 1).getAdjektiv();
-
-                        tv_substantiv.setText(selected_sub);
-                        tv_adjektiv.setText(selected_adj);
-
+                .setPositiveButton("Nächste", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        /*
+                        =========================================
+                        */
+                        NextCase();
+                        /*
+                        =========================================
+                        */
                     }
                 })
-                .setNegativeButton("Zurück",new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog,int id) {
+                .setNegativeButton("Zurück", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
 
+                        //Update this case "occurrences" in the statistics
+                        statistics.get(myCase - 1).setOccurrences(statistics.get(myCase - 1).getOccurrences() + 1);
                         dialog.cancel();
                     }
                 });
@@ -404,8 +378,6 @@ public class Spielen extends Activity {
 
         // show it
         alertDialog.show();
-
-
     }
 
     @Override
@@ -463,6 +435,9 @@ public class Spielen extends Activity {
 
     public void setRadioButtons(int my_case){
         int my_fcase = (my_case - 1) / 16;
+        rg_artikel.clearCheck();
+        rg_adjektiv.clearCheck();
+        rg_substantiv.clearCheck();
 
         switch(my_fcase) {
             case 0:                     //Bestimmtem Artikel case
@@ -601,5 +576,119 @@ public class Spielen extends Activity {
                     rb_selectedSubstantiv= rb_substantiv4.getText().toString();
                 break;
         }
+    }
+
+    public void NextCase(){
+        sortStatistics();                                       //Sort MyStatistics
+        myCase = chooseCase();                                  //choose a case
+        //Update this case "occurrences" in the statistics
+        statistics.get(myCase - 1).setOccurrences(statistics.get(myCase - 1).getOccurrences() + 1);
+        artikel_case = statistics.get(myCase - 1).getArtikel(); // bes, unbes, ohne
+        kasus_case = statistics.get(myCase - 1).getKasus();     //nom, akk, gen, dat
+        genus_case = statistics.get(myCase - 1).getGenus();     // mask, fem, neu, pl
+
+        //Update the text views
+
+        tv_kasus1.setText(artikel_case);
+        tv_kasus2.setText(kasus_case);
+        tv_kasus3.setText(genus_case);
+
+        //Update the radio buttons for artikel
+        setRadioButtons(myCase);
+
+        //Select a subtantiv
+        if(genus_case.equals("maskulinum")){               //{"maskulinum", "femininum", "neutrum", "plural"};
+            rdm_subs_id = myMaskulinenIds.get(random.nextInt(myMaskulinenIds.size()));
+            selected_sub = "der " + db.getSubstantiv(rdm_subs_id).getSubstantiv();
+        }
+        else if(genus_case.equals("femininum")){
+            rdm_subs_id = myFemininumIds.get(random.nextInt(myFemininumIds.size()));
+            selected_sub = "die " + db.getSubstantiv(rdm_subs_id).getSubstantiv();
+        }
+        else if(genus_case.equals("neutrum")){
+            rdm_subs_id = myNeutrumIds.get(random.nextInt(myNeutrumIds.size()));
+            selected_sub = "das " + db.getSubstantiv(rdm_subs_id).getSubstantiv();
+        }
+        else if(genus_case.equals("plural")){
+            rdm_subs_id = myPluralIds.get(random.nextInt(myPluralIds.size()));
+            selected_sub = "die " + db.getSubstantiv(rdm_subs_id).getSubstantiv();
+        }
+
+        //Select an adjektiv
+        selected_adj = db.getAdjektiv(random.nextInt(db.getAdjektivCount()) + 1).getAdjektiv();
+
+        //Update the substantiv and adjektiv text views
+        tv_substantiv.setText(selected_sub);
+        tv_adjektiv.setText(selected_adj);
+    }
+
+    public void UpdateStatistics(){
+        for(int i = 0; i < statistics.size(); i++){
+            if(db.updateStatistic(statistics.get(i)) == -1){
+                Toast.makeText(this,
+                        "fucking error updating " + Integer.toString(i) + " Statistic :(", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //Toast.makeText(this, "onStart", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //Toast.makeText(this, "onPause", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        //Toast.makeText(this, "onStop", Toast.LENGTH_SHORT).show();
+
+        //Save the changes in statistics
+        UpdateStatistics();
+
+/*        int count_stats = db.getStatisticsCount();
+        // Print out Statistics properties
+        for (Statistic statistic : statistics) {
+            String log = "Id: " + statistic.getId() +
+                    "/" + Integer.toString(count_stats) +
+                    ", Artikel: " + statistic.getArtikel() +
+                    ", Kasus: " + statistic.getKasus() +
+                    ", Genus: " + statistic.getGenus() +
+                    ", Dek_art: " + statistic.getDek_art() +
+                    ", Dek_adj: " + statistic.getDek_adj() +
+                    ", Dek_sub: " + statistic.getDek_sub() +
+                    ", Ocurrences: " + statistic.getOccurrences() +
+                    ", Rights: " + statistic.getRights() +
+                    ", Wrongs: " + statistic.getWrongs() +
+                    ", Success rate: " + statistic.getSuccess_rate();
+            // Writing Adjektiven to log
+            Log.d("AllWritedStatistics", log);
+        }
+*/
+        // Don't forget to close database connection
+        db.closeDB();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        //Toast.makeText(this, "onRestart", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
     }
 }

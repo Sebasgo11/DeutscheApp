@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -20,6 +21,7 @@ public class MainActivity extends ActionBarActivity {
     Button activar, desactivar, jugar;
     Spinner time;
     String delay;
+    GifView gifView;
 
     final String [] Hours = new String [] {"1 Uhr","3 Uhr","5 Uhr","7 Uhr"};
 
@@ -36,6 +38,7 @@ public class MainActivity extends ActionBarActivity {
         desactivar = (Button) findViewById(R.id.bDesactivar);
         jugar = (Button)findViewById(R.id.bJugar);
         time = (Spinner) findViewById(R.id.spinner);
+        gifView=(GifView)findViewById(R.id.gif);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         time.setAdapter(adapter);
 
@@ -43,7 +46,7 @@ public class MainActivity extends ActionBarActivity {
                 new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        Toast.makeText(MainActivity.this, (CharSequence) parent.getItemAtPosition(position),Toast.LENGTH_SHORT).show();
+
                         delay = time.getSelectedItem().toString();
                     }
 

@@ -1,5 +1,8 @@
 package com.sebastiangomez.konjugapp;
 
+/**
+ * Created by USUARIO on 30/07/2015.
+ */
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -554,3 +557,4 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 }
+

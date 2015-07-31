@@ -109,7 +109,6 @@ public class MyService extends Service {
 
         @Override
         protected void onProgressUpdate(String... values) {
-            Toast.makeText(getApplicationContext(), "Hora actual: " + values[0], Toast.LENGTH_SHORT).show();
 
             doNotification();
             super.onProgressUpdate(values);

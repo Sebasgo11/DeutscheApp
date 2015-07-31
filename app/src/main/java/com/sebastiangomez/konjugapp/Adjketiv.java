@@ -4,6 +4,7 @@ package com.sebastiangomez.konjugapp;
  * Created by USUARIO on 30/07/2015.
  */
 public class Adjketiv {
+
     private int id;
     private String adjektiv;
 
@@ -34,4 +35,5 @@ public class Adjketiv {
     public void setAdjektiv(String adjektiv) {
         this.adjektiv = adjektiv;
     }
+
 }
